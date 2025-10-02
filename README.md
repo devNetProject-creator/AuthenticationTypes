@@ -1,5 +1,6 @@
 # AuthenticationTypes
-Performs authentication with
+Performs authentication with:
+
 1.JWT, 
 2.OpenIDConnect, 
 3.Identity . 
