@@ -1,0 +1,63 @@
+trigger:
+- main
+
+variables:
+- name: buildConfiguration
+  value: 'Release'
+- name: projectPath
+  value: 'FoodDelivery.MVC/FoodDelivery.MVC.csproj'
+- name: artifactName
+  value: 'FoodMVCArtifact'
+
+jobs:
+- job: BuildAndDeploy
+  displayName: Build and Deploy MVC Project
+  pool:
+    vmImage: 'windows-latest'
+
+  steps:
+
+
+  - task: UseDotNet@2
+    displayName: 'Install .NET 8 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '8.0.x'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore NuGet Packages'
+    inputs:
+      command: 'restore'
+      projects: '$(projectPath)'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish MVC Project'
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: '$(projectPath)'
+      arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish'
+      zipAfterPublish: false
+
+  - task: ArchiveFiles@2
+    displayName: 'Create zip package'
+    inputs:
+      rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/publish'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/FoodDeliveryMVC.zip'
+      replaceExistingArchive: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Build Artifact'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/FoodDeliveryMVC.zip'
+      ArtifactName: '$(artifactName)'
+  - task: AzureWebApp@1
+    displayName: 'Deploy MVC to Azure App Service'
+    inputs:
+      azureSubscription: 'VishnuMVC'
+      appType: 'webApp'
+      appName: 'FoodDeliveryMVC20250727144844'
+      package: '$(Build.ArtifactStagingDirectory)/FoodDeliveryMVC.zip'
+...

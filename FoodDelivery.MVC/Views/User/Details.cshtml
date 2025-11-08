@@ -1,0 +1,14 @@
+﻿@model FoodDelivery.MVC.Models.UserViewModel
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<h2>User Details</h2>
+
+<div>
+    <strong>Email:</strong> @Model.Email <br />
+    <strong>Role:</strong> @Model.Role <br />
+    <strong>Google User:</strong> @(Model.IsGoogleUser ? "Yes" : "No")
+</div>
+
+<a asp-action="Index" class="btn btn-secondary mt-2">Back</a>

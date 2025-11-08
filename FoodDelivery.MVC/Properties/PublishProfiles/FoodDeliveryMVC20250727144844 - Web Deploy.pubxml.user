@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAALqMKdJCRf0K1xbepqFXlzwAAAAACAAAAAAADZgAAwAAAABAAAABbftq9Qa8wMgKqdYZiK1e+AAAAAASAAACgAAAAEAAAAM7zSZwsYRLNYR98RYhV94SAAAAAMsoK9ShJOwnMhXBT9hAW7sAn9ZgSVUWERZwd7z+wKGerQhg0T5nIEL54NOtiDpucTSzVXRS6Ybzf+GNWJQDAwbkNvIyoeJi7GmKzrEGW96/gJ2gUAQO3Sp9+Qr/RimxxGfT3PfimVm1fCO/PMITv4mrieFCSdU36l+DRDRSm0EsUAAAAMO2DQSA3mj1KFE/CJQCvWPtXzHk=</EncryptedPassword>
+    <History>False|2025-07-27T09:23:39.8255870Z||;False|2025-07-27T14:51:19.1902949+05:30||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server=tcp:vishnusqltest.database.windows.net,1433%3bInitial Catalog=FoodDelivery%3bPersist Security Info=False%3bUser ID=saadmin%3bPassword=Password%40%3bMultipleActiveResultSets=False%3bEncrypt=True%3bTrustServerCertificate=False%3bConnection Timeout=30%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

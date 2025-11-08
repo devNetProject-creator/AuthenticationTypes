@@ -1,0 +1,30 @@
+﻿@model FoodDelivery.MVC.Models.UserViewModel
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<h2>Edit User Role</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label>Role</label>
+        <select asp-for="Role" class="form-control" asp-items="new SelectList(ViewBag.Roles)">
+            <option value="">-- Select Role --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Google User?</label>
+        <input asp-for="IsGoogleUser" class="form-control" readonly />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
