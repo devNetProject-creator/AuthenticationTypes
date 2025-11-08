@@ -1,0 +1,52 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  artifactName: 'Food_drop'
+  projectFile: '**/FoodDelivery.API.csproj'
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.0.x'
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '**/*.sln'
+
+- task: DotNetCoreCLI@2
+  displayName: Build and Publish API
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '$(projectFile)'
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+
+- task: PowerShell@2
+  displayName: Rename published API zip
+  inputs:
+    targetType: 'inline'
+    script: |
+      $zip = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)" -Filter "*.zip" -Recurse | Select-Object -First 1
+      Rename-Item -Path $zip.FullName -NewName "FoodDelivery.API.zip"
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: '$(artifactName)'
+    publishLocation: 'Container'
+
+- task: AzureWebApp@1
+  displayName: Deploy to Azure App Service
+  inputs:
+    azureSubscription: 'VishnuAPI' # Replace with your real connection
+    appType: 'webApp'
+    appName: 'FoodDeliveryAPI20250727145950' # Your real Azure App name
+    package: '$(Build.ArtifactStagingDirectory)/FoodDelivery.API.zip'
+     
+
